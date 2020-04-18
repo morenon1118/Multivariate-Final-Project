@@ -1,6 +1,14 @@
+#FINAL RMD - RAW
+
+library(MASS)
 library(rvest)
 library(dplyr)
 
+#
+##
+### DATA PREP
+##
+#
 
 #upsert
 dat.std <- read.csv("/Users/Computer/Downloads/MLS data standard.csv")
@@ -28,15 +36,32 @@ MLS <- MLS[MLS$Gls. > 0, ]
 # write.csv(MLS, "/Users/Computer/Documents/2019MLS.csv", row.names = FALSE)
 # write.csv(MLS, "/Users/Computer/Documents/2019MLS.csv", row.names = FALSE)
 
-url <- "https://www.thebluetestament.com/2019/6/13/18678329/complete-2019-mls-major-league-soccer-salaries-millionaires-sporting-kc"
+# url <- "https://www.thebluetestament.com/2019/6/13/18678329/complete-2019-mls-major-league-soccer-salaries-millionaires-sporting-kc"
 
 #Bringing in player salary
 salary <- read.table("/Users/Computer/Desktop/MLS19 salary.txt", sep = "\t")
-# salary$Player <- paste(salary$V1, salary$V2)
-# salary$V1 <- salary$Player
-# salary <- salary[, -c(5)]
-colnames(salary) <- c("Player", "Team", "Pos", "Salary")
+salary$Player <- paste(salary$V1, salary$V2, sep = "-")
+salary <- salary[, -c(1, 2, 6)]
+colnames(salary) <- c("Team", "Pos", "Salary", "Player")
 
 MLS.new <- left_join(MLS, salary, by = "Player")
 
+### EXPORTED TO EXCEL:
+### FILLED IN MISSING SALARIES BY HAND
+### REMOVED COLUMNS I DIDN'T WANT
+### SIMPLIFIED POSITIONS
 
+write.csv(MLS.new, "/Users/Computer/Documents/MLSraw.csv", row.names = FALSE)
+MLS <- read.csv("/Users/Computer/Documents/MLSraw.csv")
+
+#
+##
+### EDA
+##
+#
+
+summary(MLS)
+
+# Categoricals
+table(MLS$Pos.x)
+plot(table(MLS$Squad.x))
