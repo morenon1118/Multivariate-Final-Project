@@ -65,3 +65,26 @@ summary(MLS)
 # Categoricals
 table(MLS$Pos.x)
 plot(table(MLS$Squad.x))
+
+
+
+
+
+#
+##
+### MODEL BUILD
+##
+#
+
+
+#PCA 
+mdl.pca <- prcomp(MLS[, -c(1:4)], scale = TRUE)
+screeplot(mdl.pca)
+mdl.pca
+
+#Cluster
+MLS <- MLS[-c(30), ]
+rownames(MLS) <- MLS$Player
+d <- dist(MLS[, -c(2:4)], method = "euclidean")
+mdl.clust <- hclust(d)
+plot(mdl.clust)
