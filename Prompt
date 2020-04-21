@@ -1,0 +1,63 @@
+Goal
+
+The goal of this project is to apply the material introduced in this class on a real-world data
+set and create a formal report to represent all your work. You are going to find a real dataset
+of interest by yourself and do a thorough multivariate analysis. The dataset should not come
+from a textbook or homework assignment. The number of observations should not be small
+(it should contain at least several hundred observations). You may search online for resources.
+Websites like Kaggle or world bank data may be a helpful resource for real datasets. Please
+make sure your dataset contains more than 5 variables (most of them are continuous). You
+must bring the dataset to get approval from me and submit to Sakai before Thursday,
+April 16.
+
+Instructions
+The following are some instructions about the preparation of the report.
+
+1. Write a summary and description of the dataset you use. You may use summary statistics,
+descriptive statistics, figures, etc.
+2. Clearly state the research questions and your analysis plan of the project.
+3. State at least two possible multivariate analysis methods you want to use in the analysis,
+at least one of the methods should be in classification (LDA or Cluster). You may also use
+other multivariate analysis methods that are not covered in the book to do your analysis.
+4. State whether your data satisfy the assumptions, how you fit the models, how you use
+the output from these models to answer your research questions (include numerical summaries, graphics, and interpretations).
+5. Compare the models or further discussion of your models, provide suggestions to other
+people if they want to use similar methods in their analysis.
+6. Address any problems you meet while analyzing the dataset.
+7. Discuss further questions raised by your study (that might be investigated in future
+research or analysis).
+
+Report
+You should write up your analysis and report in the form of a short technical/research
+article, preferably in the format of a high-quality statistics or mathematics journal.
+• Your main part of the report should be 4-7 pages, your writeup should briefly describe
+the points listed in the previous section.
+• An abstract highlighting the results from your analysis should be included before the
+body of the work.
+• Graphs, figures and tables can be helpful to understand your findings. An appendix
+should include your code and/or computer output. (extra figures/tables and appendix
+are not included in the 4-7 page limit)
+• Interesting running results can be included in the body of the report.
+• A bibliography is necessary for any references you make
+
+Presentation
+You are expected to give a 12 min talk (10 min present + 2 min question) at the scheduled
+final exam day: 1-3 pm Tuesday, April 28. Your final presentations must be accompanied by
+well-written, informative slides.
+
+Grading
+You are expected to work alone on this project. You are free to use textbooks, online resources
+and I am here to help and encourage you to meet/discuss with me the project. This project
+report essentially counts 20% and the final presentation counts 10% to your final letter grade.
+Your grade for the report will be determined by the following:
+20% Description of the data, a summary of the possible research questions
+40% Appropriate and correct analysis procedures
+20% Complexity of your decisions, suggestions, extensions
+10% Well-written (including spelling, grammar and punctuation) and attractive report meeting
+the guidelines set above
+10% R-code is attached as an appendix
+
+Due Date
+The written report of the project is due Sunday, April 26 by 11:55pm, submitted to the
+Sakai. Feel free to turn it in early. No late work is accepted!!! The slides must be submitted
+to Sakai before 12:30pm Tuesday April 28.

@@ -1,0 +1,16 @@
+Column Key:
+
+MP - Match appearances
+Min - Minutes Played
+Gls - Goals
+Ast - Assists
+Gls.90 - Goals per 90
+Ast.90 - Assists per 90
+G.A.90 - Goals plus assists per 90
+xG - Expected goals
+xA - Expected assists
+xG.1 - Expected goals per 90
+xA.1 - Expected assist per 90
+SCA	- Shot creating actions
+SCA90	- Shot creating actions per 90
+PasstoShot - Total passes that lead to a shot attempt

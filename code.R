@@ -44,14 +44,15 @@ salary$Player <- paste(salary$V1, salary$V2, sep = "-")
 salary <- salary[, -c(1, 2, 6)]
 colnames(salary) <- c("Team", "Pos", "Salary", "Player")
 
-MLS.new <- left_join(MLS, salary, by = "Player")
+MLS.raw <- left_join(MLS, salary, by = "Player")
 
-### EXPORTED TO EXCEL:
+
+### EXPORTED TO EXCEL
 ### FILLED IN MISSING SALARIES BY HAND
 ### REMOVED COLUMNS I DIDN'T WANT
-### SIMPLIFIED POSITIONS
+### SIMPLIFIED POSITIONS TO D, M, F
 
-write.csv(MLS.new, "/Users/Computer/Documents/MLSraw.csv", row.names = FALSE)
+write.csv(MLS.raw, "/Users/Computer/Documents/MLSraw.csv", row.names = FALSE)
 MLS <- read.csv("/Users/Computer/Documents/MLSraw.csv")
 
 #
@@ -69,22 +70,39 @@ plot(table(MLS$Squad.x))
 
 
 
-
 #
 ##
-### MODEL BUILD
+### MODEL BUILDS
 ##
 #
 
+## Cluster
+#Scale
+MLS.scale <- MLS[, -c(1:4)] #rm all categoricals and salary
+MLS.scale <- scale(MLS.scale, center = T, scale = T) #standardize remaining metrics
 
-#PCA 
+
+#Cluster on production metrics
+rownames(MLS.scale) <- MLS$Player
+d <- dist(MLS.scale, method = "euclidean")
+mdl.clust <- hclust(d)
+plot(mdl.clust, cex = .75)
+
+#Applying groups to dataset
+k = 4
+clusters <- as.data.frame(cutree(mdl.clust, k=k))
+colnames(clusters) <- c("bin")
+MLS$Cluster <- clusters$bin
+rect.hclust(mdl.clust, k=k, border="orange")
+
+
+
+## PCA 
 mdl.pca <- prcomp(MLS[, -c(1:4)], scale = TRUE)
 screeplot(mdl.pca)
 mdl.pca
 
-#Cluster
-MLS <- MLS[-c(30), ]
-rownames(MLS) <- MLS$Player
-d <- dist(MLS[, -c(2:4)], method = "euclidean")
-mdl.clust <- hclust(d)
-plot(mdl.clust)
+
+
+## LDA
+
