@@ -3,6 +3,7 @@
 library(MASS)
 library(rvest)
 library(dplyr)
+library(ggplot2)
 
 #
 ##
@@ -25,15 +26,14 @@ dat.raw <- merge(dat.std, dat.gls, by = c("Player"))
 dat.raw <- merge(dat.raw, dat.pos, by = c("Player"))
 
 #dedupe
-MLS <- dat.raw[!duplicated(dat.raw$Player), ]
+MLS.raw <- dat.raw[!duplicated(dat.raw$Player), ]
 
-#clean and refine to find players who scored a goal
-MLS$Player <- as.character(MLS$Player)
-MLS <- MLS[MLS$Gls. > 0, ]
+#clean and refine to find players who have played over 1500 minutes
+MLS.raw$Player <- as.character(MLS.raw$Player)
+MLS.raw <- MLS.raw[MLS.raw$Min > 1500, ]
 
 
 #export
-# write.csv(MLS, "/Users/Computer/Documents/2019MLS.csv", row.names = FALSE)
 # write.csv(MLS, "/Users/Computer/Documents/2019MLS.csv", row.names = FALSE)
 
 # url <- "https://www.thebluetestament.com/2019/6/13/18678329/complete-2019-mls-major-league-soccer-salaries-millionaires-sporting-kc"
@@ -44,16 +44,18 @@ salary$Player <- paste(salary$V1, salary$V2, sep = "-")
 salary <- salary[, -c(1, 2, 6)]
 colnames(salary) <- c("Team", "Pos", "Salary", "Player")
 
-MLS.raw <- left_join(MLS, salary, by = "Player")
+MLS.raw <- left_join(MLS.raw, salary, by = "Player")
 
-
+#Export for final cleaning touches
+write.csv(MLS.raw, "/Users/Computer/Documents/MLSraw.csv", row.names = FALSE)
 ### EXPORTED TO EXCEL
 ### FILLED IN MISSING SALARIES BY HAND
 ### REMOVED COLUMNS I DIDN'T WANT
-### SIMPLIFIED POSITIONS TO D, M, F
+### SIMPLIFIED POSITIONS TO D, M, M-F, F
 
-write.csv(MLS.raw, "/Users/Computer/Documents/MLSraw.csv", row.names = FALSE)
+#Bring back
 MLS <- read.csv("/Users/Computer/Documents/MLSraw.csv")
+
 
 #
 ##
@@ -61,13 +63,19 @@ MLS <- read.csv("/Users/Computer/Documents/MLSraw.csv")
 ##
 #
 
-summary(MLS)
+#Look into Positions
+summary(MLS$Pos)
+# We have four main positions:
+# D - center backs and full backs
+# M - Defensive midfielders and true midfielders
+# M-F - attacking midfielders and wingers
+# F - Strikers
 
-# Categoricals
-table(MLS$Pos.x)
-plot(table(MLS$Squad.x))
+#Goals+assists/90 by Targets
+ggplot(MLS, aes(G.A.90, Targ, color = as.factor(MLS$Pos))) + geom_point()
 
-
+#Salary by Goals+assists/90
+ggplot(MLS, aes(G.A.90, Salary, color = as.factor(MLS$Pos))) + geom_point()
 
 
 #
@@ -78,7 +86,7 @@ plot(table(MLS$Squad.x))
 
 ## Cluster
 #Scale
-MLS.scale <- MLS[, -c(1:4)] #rm all categoricals and salary
+MLS.scale <- MLS[, -c(1, 2, 3, 4, 25)] #rm all categoricals and salary
 MLS.scale <- scale(MLS.scale, center = T, scale = T) #standardize remaining metrics
 
 

@@ -14,3 +14,8 @@ xA.1 - Expected assist per 90
 SCA	- Shot creating actions
 SCA90	- Shot creating actions per 90
 PasstoShot - Total passes that lead to a shot attempt
+PasstoGoal - Total passes that lead to a goal
+Touches - Total touches
+TotDist - Total distance with ball
+Targ - Total times targeted
+Salary - Annual Salary in USD
